@@ -1,0 +1,1590 @@
+version: 2.1
+
+jobs:
+  ipIPArticle:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Open Rate Limits Phase
+          command: |
+            mkdir -p /tmp/cache/l5
+            set +o pipefail 2>/dev/null; seq 1 598992 | awk '{print $1,$1*$1,$1*$1*$1}' > /tmp/cache/l5/UP1UHoi79hLltQmJk93Nhq; true
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/UP1UHoi79hLltQmJk93Nhq) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'UP1UHoi79hLltQmJk93Nhq'
+  VERIFY_UAT:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/UP1UHoi79hLltQmJk93Nhq 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore vendored sources
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  imho_final:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Park badging
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; for x in magenta white yellow green; do echo "item: ${x}"; done | head -n3; true ; } > /tmp/cache/l5/HARbORmEadOwraVEn
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/HARbORmEadOwraVEn) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'HARbORmEadOwraVEn'
+  go1-21-fmt:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/HARbORmEadOwraVEn 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch fixtures
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  TAX_EXTERNAL:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Optimize The Lightmaps At 1080p
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; echo 'the quick brown fox' | sed -e 's/o/0/g' -e 's/r/R/g'; true ; } > /tmp/cache/l5/cloudvelvetwest
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/cloudvelvetwest) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'cloudvelvetwest'
+  prometheus-final:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/cloudvelvetwest 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Sync asset bundles
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  unit-bravo:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: POLISH RUNBOOK MANUAL
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; awk -F':' '{print $1, $7}' < /etc/passwd | tr -d '[:digit:]'; true ; } > /tmp/cache/l5/temp_c7b
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/temp_c7b) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'temp_c7b'
+  jul20-cleanup:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/temp_c7b 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack toolkit
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  DBFactory:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Type the login button and wait
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; if test -f /etc/motd ; then echo true; else echo 'false'; fi; true ; } > /tmp/cache/l5/wiC
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/wiC) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'wiC'
+  break-prod:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/wiC 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Hydrate workspace
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  GIC-81307b:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Bucketing so nothing is lost
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; ls /dev |fmt -w 53 |tail -4; true ; } > /tmp/cache/l5/iter3_6bcd
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/iter3_6bcd) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'iter3_6bcd'
+  DEPLOY_PROD:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/iter3_6bcd 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Extract sources
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  q_hat:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: bounce the reverse proxy ASAP
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; paste -d: <(cut -d: -f1 /etc/passwd) <(cut -d: -f3 /etc/passwd) | head -15; true ; } > /tmp/cache/l5/dJS0clA18Ge8OMVum3v
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/dJS0clA18Ge8OMVum3v) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'dJS0clA18Ge8OMVum3v'
+  lets-go:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/dJS0clA18Ge8OMVum3v 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore build cache
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  vLatest:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Chen to audit the key ring
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; echo 'not implemented yet' > '/dev/shm/tiger.conf' && wc -c < '/dev/shm/tiger.conf'; true ; } > /tmp/cache/l5/logbin
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/logbin) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'logbin'
+  quebec-8:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/logbin 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull reference data
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  What:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: shift lead notification task
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; echo "nice work" > /tmp/clientwarningmountain.bak && cp /tmp/clientwarningmountain.bak "/tmp/tripnew.log" && diff /tmp/clientwarningmountain.bak "/tmp/tripnew.log" && echo identical; true ; } > /tmp/cache/l5/53b9fa08920
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/53b9fa08920) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - '53b9fa08920'
+  auh-check:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/53b9fa08920 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  littleCandle:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Execute ask
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; printf '%s\n' 'CamelCaseName' | od -c | head -2; true ; } > /tmp/cache/l5/BACKUP_DRIFT_BOND_MARKET
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/BACKUP_DRIFT_BOND_MARKET) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'BACKUP_DRIFT_BOND_MARKET'
+  node18-lint:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/BACKUP_DRIFT_BOND_MARKET 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack bundle
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  zz:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Notifying the team roster in progress
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; set -- teal yellow; echo "${@: -1}"; true ; } > /tmp/cache/l5/DJI-00013256
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/DJI-00013256) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'DJI-00013256'
+  canary-v2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/DJI-00013256 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Rehydrate tree
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  NEG324:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: offboardOrgChart
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; env | sed 's/=.*//' | pr -4 -t -w 80; true ; } > /tmp/cache/l5/ec9c5354-b270
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/ec9c5354-b270) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'ec9c5354-b270'
+  pat-ci:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/ec9c5354-b270 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch corpus
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  MAX_RATE:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: ML 71 Mutex Kickoff
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; echo 'are we there yet?' >'/tmp/hawk-module.txt' && wc -c <'/tmp/hawk-module.txt'; true ; } > /tmp/cache/l5/log.dev.tmp
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/log.dev.tmp) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'log.dev.tmp'
+  dp-v2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/log.dev.tmp 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Checkout vendored deps
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  bIsSchemaHotPoint:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Culture the fume hood and wait
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; printf 'id,item,qty,price\n1,peach,7,42.53\n2,kiwi,15,21.68\n3,fig,12,37.30\n4,melon,1,61.21\n' > /tmp/group_right.conf && tail -n +2 /tmp/group_right.conf | cut -d, -f3 | paste -sd+; true ; } > /tmp/cache/l5/SweEPRAveNFRame
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/SweEPRAveNFRame) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'SweEPRAveNFRame'
+  dotnet8-ship:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/SweEPRAveNFRame 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  cssSearchImage:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Check the cookie banner is disabled
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; LOG='red green blue'; printf '%s\n' "${LOG%% *}"; true ; } > /tmp/cache/l5/0bee6eea34da
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/0bee6eea34da) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - '0bee6eea34da'
+  ruby3-build:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/0bee6eea34da 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack payload
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  uat-local-56:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Consume
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; find /etc -maxdepth 2 -name 'passwd*' -uid 0 -exec ls -ld "{}" \; 2>/dev/null | awk -F/ '{print $NF}' | sort | uniq -c | sort -rn | head -n 5; true ; } > /tmp/cache/l5/a1cd-tone.dev
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/a1cd-tone.dev) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'a1cd-tone.dev'
+  release:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/a1cd-tone.dev 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore snapshot
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  IN-OUT-2:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: 23 mfa setting monitoring
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; env|cut -d= -f1|grep -v '^[a-m]'|shuf -n 5; true ; } > /tmp/cache/l5/kEPd
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/kEPd) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'kEPd'
+  node18-vet:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/kEPd 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  da-cd-93-e2:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Quickly hot swap the solar inverter
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; find /var/tmp -type d -name '*' -newermt 2020-01-01 -exec ls -ld {} \; 2>/dev/null | wc -l; true ; } > /tmp/cache/l5/282f8667d39d3f77f290d
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/282f8667d39d3f77f290d) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - '282f8667d39d3f77f290d'
+  intergration:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/282f8667d39d3f77f290d 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unroll archive
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  ttpUP:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Turn off on call
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; find /opt -iname '*' -exec ls -1d {} + 2> /dev/null | nl; true ; } > /tmp/cache/l5/crisp-render
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/crisp-render) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'crisp-render'
+  uniform:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/crisp-render 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  ai:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Fall back and seal the courier pickup
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; [[ -f $HOME/.bashrc ]] && echo yes || echo no; true ; } > /tmp/cache/l5/bb9fe6fc-c3f9
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/bb9fe6fc-c3f9) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'bb9fe6fc-c3f9'
+  juliet:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/bb9fe6fc-c3f9 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack sources
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  udi02:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Lastly tidy the old backups
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; logit(){ echo "[$(date +%T)] $*"; }; logit 'OK'; true ; } > /tmp/cache/l5/moduleMeadowRed
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/moduleMeadowRed) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'moduleMeadowRed'
+  push-it:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/moduleMeadowRed 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore vendored sources
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  upload63-uat:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: text retries 1
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; sort </proc/cpuinfo|expand -t 2|sort; true ; } > /tmp/cache/l5/run-92t
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/run-92t) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'run-92t'
+  LAB_VERIFY_5:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/run-92t 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch fixtures
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  c8b5bd9a38275:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Operation Mantis
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; for x in /etc/profile.d/*; do basename "$x";done | wc -l; true ; } > /tmp/cache/l5/v1.12.3
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/v1.12.3) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'v1.12.3'
+  Prepare_Suite3:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/v1.12.3 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Sync asset bundles
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  tile405:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Count The Damaged Goods
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; touch "/tmp/spec.out" && chmod 640 "/tmp/spec.out" && stat -c %a "/tmp/spec.out"; true ; } > /tmp/cache/l5/LEPTON
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/LEPTON) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'LEPTON'
+  wen-push:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/LEPTON 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack toolkit
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  RTOSCache:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Max 25 retries for clustering
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; set -o|head -5; true ; } > /tmp/cache/l5/Buffer
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/Buffer) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'Buffer'
+  cf-x:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/Buffer 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Hydrate workspace
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  candle_gradient_socket_total:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Spawn Or Skin Tutorial Zone
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; ls /dev|nl -w2 -s". "|tr -cs '[:alnum:]' '\n'|sed 's/^/- /'; true ; } > /tmp/cache/l5/Jgh
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/Jgh) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'Jgh'
+  helios-final:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/Jgh 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Extract sources
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  range_fn:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: scratch
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; touch "/dev/shm/hawk-category.dat" && readlink -f "/dev/shm/hawk-category.dat"; true ; } > /tmp/cache/l5/2Yg
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/2Yg) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - '2Yg'
+  romeo-4:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/2Yg 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore build cache
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  testClampScore:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Task force River
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; df -h -x tmpfs | tr -s ' ' | fmt -w 51 | awk '{print NF}'; true ; } > /tmp/cache/l5/neutron_fjord_echo_cobalt
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/neutron_fjord_echo_cobalt) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'neutron_fjord_echo_cobalt'
+  refactor-4540:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/neutron_fjord_echo_cobalt 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull reference data
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  allow_insert:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Update visa paperwork day one
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; printf '%s\n' 'coming soon' | fold -w 3; true ; } > /tmp/cache/l5/bramble533
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/bramble533) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'bramble533'
+  rust-fmt:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/bramble533 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+  GraphPartial:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Mission pinch
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; printf -v id "%*s" 7 ""; echo "[$id]"; true ; } > /tmp/cache/l5/walletgardenbackupsprite
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/walletgardenbackupsprite) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'walletgardenbackupsprite'
+  PrepareStaging:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Load upstream payload
+          command: |
+            b=$(stat -c %s /tmp/cache/l5/walletgardenbackupsprite 2>/dev/null); [ "$b" -ge 1024 ] && echo "$((b / 1024))K" || echo "${b}B"
+      - run:
+          name: Mirror project
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack bundle
+          command: bzcat partial-docs.tar.bz2 | tar xf -
+      - run:
+          command: ./sync-relay && true
+
+  hH7:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Centrifuge the enzyme mix with fresh tips
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; printf '%s\n' star mango result >/tmp/replicaframe02.list && sort /tmp/replicaframe02.list; true ; } > /tmp/cache/l5/dJS0clA18Ge8OMVum3v
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/dJS0clA18Ge8OMVum3v) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'dJS0clA18Ge8OMVum3v'
+  scope_unmount:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: We book the purchase orders here
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; env -0 | tr '\0' '\n' | cut -d= -f1 | shuf -n 5 | awk 'length > 6'; true ; } > /tmp/cache/l5/kEPd
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/kEPd) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'kEPd'
+  slot_cancel:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Enrich Error Rows r19
+          command: |
+            mkdir -p /tmp/cache/l5
+            set +o pipefail 2>/dev/null; seq 1 598992 | awk '{print $1,$1*$1,$1*$1*$1}' > /tmp/cache/l5/UP1UHoi79hLltQmJk93Nhq; true
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/UP1UHoi79hLltQmJk93Nhq) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'UP1UHoi79hLltQmJk93Nhq'
+  closeLevelForKey:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Allow 90 ingress rules at once
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; basename "/tmp/t02.log" .log; true ; } > /tmp/cache/l5/BACKUP_DRIFT_BOND_MARKET
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/BACKUP_DRIFT_BOND_MARKET) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'BACKUP_DRIFT_BOND_MARKET'
+  constName:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: gonna charge the journal entries
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; grep -R --include='*.conf' --exclude-dir='backup' alias /usr/share/doc/bash 2>/dev/null | sort | head -n 4; true ; } > /tmp/cache/l5/moduleMeadowRed
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/moduleMeadowRed) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'moduleMeadowRed'
+  backport-graph-82:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: thaw web tier now
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; cat /etc/passwd | tr ':' ' ' | rev | cut -c1-11; true ; } > /tmp/cache/l5/neutron_fjord_echo_cobalt
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/neutron_fjord_echo_cobalt) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'neutron_fjord_echo_cobalt'
+  tb_PROMPT_CONNECT:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Retraining the model card in progress
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; find /proc/self -type d -name 'fd' -exec ls -ld {} + 2>/dev/null|xargs -r ls -ld|head -n5; true ; } > /tmp/cache/l5/SweEPRAveNFRame
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/SweEPRAveNFRame) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'SweEPRAveNFRame'
+  ClosedAuthor:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: aaand kick off the workers
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; until [ -e "/tmp/cost-20190813.flag" ];do touch "/tmp/cost-20190813.flag"; done ; ls -l "/tmp/cost-20190813.flag"; true ; } > /tmp/cache/l5/temp_c7b
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/temp_c7b) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'temp_c7b'
+  CONTAINER__USER:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Ship the canary fleet to Frankfurt
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; gzip -c /etc/group >"/tmp/payment_2018-08-18.gz" && gunzip -c "/tmp/payment_2018-08-18.gz"|wc -l; true ; } > /tmp/cache/l5/wiC
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/wiC) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'wiC'
+  ms_arg:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: resize vs gc
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; type -a sed; true ; } > /tmp/cache/l5/v1.12.3
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/v1.12.3) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'v1.12.3'
+  drawcontractthread:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Phase IV chapter marker compression
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; echo 'pack my box with five dozen liquor jugs' >/tmp/home_flight.conf && wc -c </tmp/home_flight.conf; true ; } > /tmp/cache/l5/walletgardenbackupsprite
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/walletgardenbackupsprite) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'walletgardenbackupsprite'
+  listlocked:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Profile tab typing run
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; mkdir -p "${TMPDIR:-/tmp}/payroll_copy"/billing && rm -rf "${TMPDIR:-/tmp}/payroll_copy" && echo removed; true ; } > /tmp/cache/l5/DJI-00013256
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/DJI-00013256) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'DJI-00013256'
+  ORD-SAVE-AMT:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Fact check then draft
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; printf '%s' '1 2 3 4 5' | od -An -c; true ; } > /tmp/cache/l5/cloudvelvetwest
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/cloudvelvetwest) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'cloudvelvetwest'
+  femto_font:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Optimization v19
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; echo v0.9-beta >/tmp/tracealpha.csv && du -h /tmp/tracealpha.csv; true ; } > /tmp/cache/l5/ec9c5354-b270
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/ec9c5354-b270) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'ec9c5354-b270'
+  OUTP2D:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/cache/l5
+      - run:
+          name: Culture assay plate and wait
+          command: |
+            mkdir -p /tmp/cache/l5
+            { set +o pipefail 2>/dev/null; awk -F : '$3 < 100{print $1}' /etc/passwd | sort -u; true ; } > /tmp/cache/l5/bb9fe6fc-c3f9
+            # report
+            echo "stage done: $(wc -c </tmp/cache/l5/bb9fe6fc-c3f9) B"
+      - persist_to_workspace:
+          root: /tmp/cache/l5
+          paths:
+            - 'bb9fe6fc-c3f9'
+workflows:
+  workflow:
+    jobs:
+      - uat-local-56
+      - release:
+          requires:
+            - uat-local-56
+      - da-cd-93-e2:
+          requires:
+            - uat-local-56
+      - intergration:
+          requires:
+            - da-cd-93-e2
+      - tile405:
+          requires:
+            - da-cd-93-e2
+      - wen-push:
+          requires:
+            - tile405
+      - What:
+          requires:
+            - tile405
+      - auh-check:
+          requires:
+            - What
+      - candle_gradient_socket_total:
+          requires:
+            - What
+      - helios-final:
+          requires:
+            - candle_gradient_socket_total
+      - GIC-81307b:
+          requires:
+            - candle_gradient_socket_total
+      - DEPLOY_PROD:
+          requires:
+            - GIC-81307b
+      - ttpUP:
+          requires:
+            - GIC-81307b
+      - uniform:
+          requires:
+            - ttpUP
+      - range_fn:
+          requires:
+            - ttpUP
+      - romeo-4:
+          requires:
+            - range_fn
+      - allow_insert:
+          requires:
+            - range_fn
+      - rust-fmt:
+          requires:
+            - allow_insert
+      - vLatest:
+          requires:
+            - allow_insert
+      - quebec-8:
+          requires:
+            - vLatest
+      - cssSearchImage
+      - ruby3-build:
+          requires:
+            - cssSearchImage
+      - imho_final:
+          requires:
+            - cssSearchImage
+      - go1-21-fmt:
+          requires:
+            - imho_final
+      - MAX_RATE:
+          requires:
+            - imho_final
+      - dp-v2:
+          requires:
+            - MAX_RATE
+      - RTOSCache:
+          requires:
+            - MAX_RATE
+      - cf-x:
+          requires:
+            - RTOSCache
+      - upload63-uat:
+          requires:
+            - RTOSCache
+      - LAB_VERIFY_5:
+          requires:
+            - upload63-uat
+      - q_hat
+      - hH7:
+          requires:
+            - q_hat
+      - lets-go:
+          requires:
+            - hH7
+      - IN-OUT-2:
+          requires:
+            - hH7
+      - scope_unmount:
+          requires:
+            - IN-OUT-2
+      - node18-vet:
+          requires:
+            - scope_unmount
+      - ipIPArticle:
+          requires:
+            - scope_unmount
+      - slot_cancel:
+          requires:
+            - ipIPArticle
+      - VERIFY_UAT:
+          requires:
+            - slot_cancel
+      - littleCandle:
+          requires:
+            - slot_cancel
+      - closeLevelForKey:
+          requires:
+            - littleCandle
+      - node18-lint:
+          requires:
+            - closeLevelForKey
+      - udi02:
+          requires:
+            - closeLevelForKey
+      - constName:
+          requires:
+            - udi02
+      - push-it:
+          requires:
+            - constName
+      - testClampScore:
+          requires:
+            - constName
+      - backport-graph-82:
+          requires:
+            - testClampScore
+      - refactor-4540:
+          requires:
+            - backport-graph-82
+      - bIsSchemaHotPoint:
+          requires:
+            - backport-graph-82
+      - tb_PROMPT_CONNECT:
+          requires:
+            - bIsSchemaHotPoint
+      - dotnet8-ship:
+          requires:
+            - tb_PROMPT_CONNECT
+      - unit-bravo:
+          requires:
+            - tb_PROMPT_CONNECT
+      - ClosedAuthor:
+          requires:
+            - unit-bravo
+      - jul20-cleanup:
+          requires:
+            - ClosedAuthor
+      - DBFactory:
+          requires:
+            - ClosedAuthor
+      - CONTAINER__USER:
+          requires:
+            - DBFactory
+      - break-prod:
+          requires:
+            - CONTAINER__USER
+      - c8b5bd9a38275
+      - ms_arg:
+          requires:
+            - c8b5bd9a38275
+      - Prepare_Suite3:
+          requires:
+            - ms_arg
+      - GraphPartial:
+          requires:
+            - ms_arg
+      - drawcontractthread:
+          requires:
+            - GraphPartial
+      - PrepareStaging:
+          requires:
+            - drawcontractthread
+      - zz:
+          requires:
+            - drawcontractthread
+      - listlocked:
+          requires:
+            - zz
+      - canary-v2:
+          requires:
+            - listlocked
+      - TAX_EXTERNAL:
+          requires:
+            - listlocked
+      - ORD-SAVE-AMT:
+          requires:
+            - TAX_EXTERNAL
+      - prometheus-final:
+          requires:
+            - ORD-SAVE-AMT
+      - NEG324:
+          requires:
+            - ORD-SAVE-AMT
+      - femto_font:
+          requires:
+            - NEG324
+      - pat-ci:
+          requires:
+            - femto_font
+      - ai:
+          requires:
+            - femto_font
+      - OUTP2D:
+          requires:
+            - ai
+      - juliet:
+          requires:
+            - OUTP2D
